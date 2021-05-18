@@ -1,0 +1,19 @@
+{
+  "name": "node-mongo_db",
+  "version": "1.0.0",
+  "description": "simple nodejs and mongodb crud",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "author": "salvatore borgia",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "*",
+    "ejs": "*",
+    "express": "*",
+    "mongodb": "*",
+    "nodemon": "*"
+  }
+}

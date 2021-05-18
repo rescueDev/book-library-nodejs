@@ -1,9 +1,10 @@
 const mongodb = require("mongodb");
 const MongoClient = mongodb.MongoClient;
+require("dotenv").config();
 
 const mongoConnect = (cb) => {
   MongoClient.connect(
-    "mongodb+srv://salvo:liesina92@cluster0.5vg5z.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+    `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.5vg5z.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`
   )
     .then((client) => {
       console.log("Connected");

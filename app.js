@@ -2,12 +2,13 @@
 const mongodb = require("mongodb");
 const mongoConnect = require("./utils/database").mongoConnect;
 const express = require("express");
+require("dotenv").config();
 
 //create app instance
 const app = express();
 
 //set the view engine to ejs
-app.set("view engine", ejs);
+app.set("view engine", "ejs");
 
 //connect instance mongodb
 mongoConnect((client) => {

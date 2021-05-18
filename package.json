@@ -10,7 +10,9 @@
   "author": "salvatore borgia",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "*",
     "body-parser": "*",
+    "dotenv": "*",
     "ejs": "*",
     "express": "*",
     "mongodb": "*",

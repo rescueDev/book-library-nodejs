@@ -10,6 +10,15 @@ const app = express();
 //set the view engine to ejs
 app.set("view engine", "ejs");
 
+//home page route
+app.get("/", (req, res, next) => {
+  res.render("home");
+});
+
+//import routes
+const booksRoutes = require("./routes/books");
+app.use(booksRoutes);
+
 //connect instance mongodb
 mongoConnect((client) => {
   console.log(client);

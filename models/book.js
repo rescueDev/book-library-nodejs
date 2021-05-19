@@ -2,6 +2,7 @@
 
 const getDb = require("../utils/database").getDb;
 const mongodb = require("mongodb");
+const Author = require("./author");
 
 class Book {
   constructor(
@@ -10,16 +11,14 @@ class Book {
     publishDate,
     pageCount,
     createdAt,
-    // coverImage,
-    author
+    author_id
   ) {
     this.title = title;
     this.description = description;
     this.publishDate = publishDate;
     this.pageCount = pageCount;
     this.createdAt = createdAt;
-    // this.coverImage = coverImage;
-    this.author = author;
+    this.author_id = author_id;
   }
 
   save() {

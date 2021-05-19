@@ -1,6 +1,6 @@
 const Author = require("../models/author");
 const Book = require("../models/book");
-
+const mongodb = require("mongodb");
 exports.booksIndex = (req, res, next) => {
   Book.fetchAll()
     .then((books) => {
@@ -25,6 +25,7 @@ exports.addBook = (req, res, next) => {
   const publishDate = req.body.publishDate;
   const pageCount = req.body.pageCount;
   const createdAt = new Date();
+  const author_id = new mongodb.ObjectId();
   const author = req.body.author;
 
   //create book
@@ -34,13 +35,25 @@ exports.addBook = (req, res, next) => {
     publishDate,
     pageCount,
     createdAt,
-    author
+    author_id
   );
   book
     .save()
     .then((book) => {
       console.log(book);
-
+    })
+    .then(() => {
+      const authorToSave = new Author(author, author_id);
+      console.log("id di author", authorToSave._id);
+      authorToSave
+        .save(authorToSave.name)
+        .then((author) => {
+          console.log("saved author", author);
+          return author;
+        })
+        .catch((err) => console.log(err));
+    })
+    .then(() => {
       res.redirect("/books");
     })
     .catch((err) => console.log(err));

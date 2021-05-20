@@ -1,7 +1,13 @@
 // import mongoose to interacte to the db
-
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+
+// const authorSchema = new Schema({
+//   name: {
+//     type: String,
+//     required: true,
+//   },
+// });
 
 const bookSchema = new Schema({
   title: {
@@ -25,13 +31,10 @@ const bookSchema = new Schema({
     required: true,
     default: Date.now,
   },
-  author: [
-    {
-      type: Schema.Types.ObjectId,
-      required: true,
-      ref: "Author",
-    },
-  ],
+  author: {
+    type: Schema.Types.ObjectId,
+    required: true,
+  },
 });
 
 module.exports = mongoose.model("Book", bookSchema);

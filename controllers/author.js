@@ -1,7 +1,7 @@
 const Author = require("../models/author");
 
 exports.authorsIndex = (req, res, next) => {
-  Author.fetchAll()
+  Author.find()
     .then((authors) => {
       res.render("authors", {
         authors: authors,

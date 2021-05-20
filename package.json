@@ -16,6 +16,7 @@
     "ejs": "*",
     "express": "*",
     "mongodb": "*",
+    "mongoose": "*",
     "nodemon": "*"
   }
 }

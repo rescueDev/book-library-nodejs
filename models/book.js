@@ -1,49 +1,37 @@
-// import getDb to interacte to the db
+// import mongoose to interacte to the db
 
-const getDb = require("../utils/database").getDb;
-const mongodb = require("mongodb");
-const Author = require("./author");
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-class Book {
-  constructor(
-    title,
-    description,
-    publishDate,
-    pageCount,
-    createdAt,
-    author_id
-  ) {
-    this.title = title;
-    this.description = description;
-    this.publishDate = publishDate;
-    this.pageCount = pageCount;
-    this.createdAt = createdAt;
-    this.author_id = author_id;
-  }
+const bookSchema = new Schema({
+  title: {
+    type: String,
+    required: true,
+  },
+  description: {
+    type: String,
+    required: false,
+  },
+  publishDate: {
+    type: Date,
+    required: false,
+  },
+  pageCount: {
+    type: Number,
+    required: true,
+  },
+  createdAt: {
+    type: Date,
+    required: true,
+    default: Date.now,
+  },
+  author: [
+    {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: "Author",
+    },
+  ],
+});
 
-  save() {
-    const db = getDb();
-    return db
-      .collection("books")
-      .insertOne(this)
-      .then((book) => {
-        console.log(book);
-      })
-      .catch((err) => console.log(err));
-  }
-
-  static fetchAll() {
-    const db = getDb();
-    return db
-      .collection("books")
-      .find()
-      .toArray()
-      .then((books) => {
-        console.log(books);
-        return books;
-      })
-      .catch((err) => console.log(err));
-  }
-}
-
-module.exports = Book;
+module.exports = mongoose.model("Book", bookSchema);

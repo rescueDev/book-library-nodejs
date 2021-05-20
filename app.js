@@ -1,8 +1,7 @@
 //Import
-const mongodb = require("mongodb");
-const mongoConnect = require("./utils/database").mongoConnect;
 const express = require("express");
 const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
 require("dotenv").config();
 
 //create app instance
@@ -26,8 +25,13 @@ app.get("/", (req, res, next) => {
 app.use(booksRoutes);
 app.use(authorsRoutes);
 
-//connect instance mongodb
-mongoConnect((client) => {
-  console.log(client);
-  app.listen(3000);
-});
+//connect instance mongoose
+mongoose
+  .connect(
+    `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.5vg5z.mongodb.net/bookLibrary?retryWrites=true&w=majority`,
+    { useNewUrlParser: true }
+  )
+  .then(() => {
+    app.listen(3000);
+  })
+  .catch((err) => console.log(err));

@@ -7,8 +7,6 @@ exports.booksIndex = (req, res, next) => {
   Book.find()
     .populate("author")
     .then((books) => {
-      console.log(books);
-      // books.forEach()
       res.render("books", {
         linkPath: "/books",
         titlePage: "Books",
@@ -29,12 +27,12 @@ exports.addBook = (req, res, next) => {
   const publishDate = req.body.publishDate;
   const pageCount = req.body.pageCount;
   const createdAt = new Date();
-  const author = req.body.author;
+  const author = req.body.author.toUpperCase();
 
   //check if author exist if not create one
 
   Author.findOneAndUpdate(
-    { name: author },
+    { name: { $regex: new RegExp("^" + author + "$", "i") } },
     { name: author },
     { new: true, upsert: true }
   )

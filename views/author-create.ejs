@@ -1,0 +1,25 @@
+<%- include('./include/head.ejs') %>
+<div class="container-fluid">
+  <%- include('./include/header.ejs') %>
+
+  <div class="row">
+    <div class="col-sm-12">
+      <form method="POST" action="/add-author">
+        <div class="form-group">
+          <label for="name">name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="name"
+            aria-describedby="emailHelp"
+            placeholder="Enter name"
+            name="name"
+          />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
+<%- include('./include/end.ejs') %>

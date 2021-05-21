@@ -22,6 +22,7 @@ exports.addBookPage = (req, res, next) => {
 
 exports.addBook = (req, res, next) => {
   //request incoming data
+  const bookId = new ObjectID();
   const title = req.body.title;
   const description = req.body.description;
   const publishDate = req.body.publishDate;
@@ -38,6 +39,7 @@ exports.addBook = (req, res, next) => {
   ).then((author) => {
     //create book
     const book = new Book({
+      _id: bookId,
       title: title,
       description: description,
       publishDate: publishDate,

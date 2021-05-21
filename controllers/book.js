@@ -35,30 +35,28 @@ exports.addBook = (req, res, next) => {
     { name: { $regex: new RegExp("^" + author + "$", "i") } },
     { name: author },
     { new: true, upsert: true }
-  )
-    .then((author) => {
-      //create book
-      const book = new Book({
-        title: title,
-        description: description,
-        publishDate: publishDate,
-        pageCount: pageCount,
-        createdAt: createdAt,
-        author: author,
-      });
+  ).then((author) => {
+    //create book
+    const book = new Book({
+      title: title,
+      description: description,
+      publishDate: publishDate,
+      pageCount: pageCount,
+      createdAt: createdAt,
+      author: author,
+    });
 
-      //save book
-      book
-        .save()
-        .then((book) => {
-          console.log("saved book", book);
-          //save author
-          return book;
-        })
-        .then(() => {
-          res.redirect("/books");
-        })
-        .catch((err) => console.log(err));
-    })
-    .catch((err) => console.log(err));
+    //save book
+    book
+      .save()
+      .then((book) => {
+        console.log("saved book", book);
+        return book;
+      })
+      .then(() => {
+        res.redirect("/books");
+      })
+      .catch((err) => console.log(err));
+  });
+  // .catch((err) => console.log(err));
 };

@@ -5,9 +5,10 @@ const Author = require("../models/author");
 
 exports.booksIndex = (req, res, next) => {
   Book.find()
+    .populate("author")
     .then((books) => {
       console.log(books);
-
+      // books.forEach()
       res.render("books", {
         linkPath: "/books",
         titlePage: "Books",
@@ -22,8 +23,7 @@ exports.addBookPage = (req, res, next) => {
 };
 
 exports.addBook = (req, res, next) => {
-  //check if author exist in authors collection by id
-
+  //request incoming data
   const title = req.body.title;
   const description = req.body.description;
   const publishDate = req.body.publishDate;
@@ -31,25 +31,14 @@ exports.addBook = (req, res, next) => {
   const createdAt = new Date();
   const author = req.body.author;
 
-  Author.find({ name: author })
-    .then((authorFinded) => {
-      let authorId;
-      console.log(
-        "🚀 ~ file: book.js ~ line 36 ~ Author.find ~ author",
-        authorFinded
-      );
-      const authorToAdd = new Author({ name: author, _id: authorId });
-      if (authorFinded.length <= 0) {
-        console.log("author not found");
-        authorId = new ObjectID();
-        console.log("id per author non trovato", authorId);
-        authorToAdd.save();
-      } else {
-        console.log("author exists", authorFinded[0]._id);
-        authorId = authorFinded[0]._id;
-        console.log("id per author trovato", authorId);
-      }
-      // return authorId;
+  //check if author exist if not create one
+
+  Author.findOneAndUpdate(
+    { name: author },
+    { name: author },
+    { new: true, upsert: true }
+  )
+    .then((author) => {
       //create book
       const book = new Book({
         title: title,
@@ -57,8 +46,10 @@ exports.addBook = (req, res, next) => {
         publishDate: publishDate,
         pageCount: pageCount,
         createdAt: createdAt,
-        author: authorToAdd,
+        author: author,
       });
+
+      //save book
       book
         .save()
         .then((book) => {
@@ -66,14 +57,10 @@ exports.addBook = (req, res, next) => {
           //save author
           return book;
         })
-
         .then(() => {
           res.redirect("/books");
         })
         .catch((err) => console.log(err));
     })
-
-    .catch((err) => {
-      console.log(err);
-    });
+    .catch((err) => console.log(err));
 };

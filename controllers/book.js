@@ -60,5 +60,12 @@ exports.addBook = (req, res, next) => {
       })
       .catch((err) => console.log(err));
   });
-  // .catch((err) => console.log(err));
 };
+
+exports.getEditBook = (req, res, next) => {
+  res.render("book-edit");
+};
+
+exports.editBook = (req, res, next) => {};
+
+exports.deleteBook = (req, res, next) => {};

@@ -10,8 +10,11 @@
           <div class="card-header">
             <h3><%= author.name %></h3>
           </div>
+          <a href="/edit-author/<%= author._id%>">Edit</a>
+          <form method="POST" action="/delete-author/<%= author._id%>">
+            <button class="btn btn-danger" type="submit">Delete</button>
+          </form>
         </div>
-
         <% }%>
       </ul>
     </div>

@@ -21,13 +21,53 @@ exports.getAddAuthor = (req, res, next) => {
 exports.addAuthor = (req, res, next) => {
   const name = req.body.name;
 
-  const author = new Author({ name: name });
-
-  //save new author
-  author
-    .save()
+  Author.findOneAndUpdate(
+    { name: name },
+    { name: name },
+    { new: true, upsert: true }
+  )
+    .then((author) => {
+      console.log(author);
+      return author;
+    })
     .then(() => {
       res.redirect("/authors");
     })
     .catch((err) => console.log(err));
+};
+
+exports.getEditAuthor = (req, res, next) => {
+  const authorId = req.params.authorId;
+  Author.findOne({ _id: authorId })
+    .then((author) => {
+      res.render("author-edit", {
+        author: author,
+      });
+    })
+    .catch((err) => console.log(err));
+};
+
+exports.editAuthor = (req, res, next) => {
+  const newName = req.body.name;
+  const authorId = req.body.authorId;
+
+  Author.findOne({ _id: authorId })
+    .then((author) => {
+      author.name = newName;
+      console.log("author modified", author);
+      return author.save();
+    })
+
+    .then(() => {
+      console.log("author edited and saved");
+      res.redirect("/authors");
+    });
+};
+
+exports.deleteAuthor = (req, res, next) => {
+  const authorId = req.params.authorId;
+  Author.findByIdAndRemove(authorId).then(() => {
+    console.log("removed");
+    res.redirect("/authors");
+  });
 };

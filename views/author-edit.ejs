@@ -1,0 +1,24 @@
+<%- include('./include/head.ejs') %>
+<div class="container-fluid">
+  <%- include('./include/header.ejs') %>
+
+  <div class="row">
+    <div class="col-sm-12">
+      <form method="POST" action="/edit-author">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="name"
+            name="name"
+            value="<%= author.name%>"
+          />
+          <input type="hidden" name="authorId" value="<%= author._id%>" />
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
+<%- include('./include/end.ejs') %>

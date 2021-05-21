@@ -1,4 +1,5 @@
 const Author = require("../models/author");
+const Book = require("../models/book");
 
 exports.authorsIndex = (req, res, next) => {
   Author.find()
@@ -66,8 +67,19 @@ exports.editAuthor = (req, res, next) => {
 
 exports.deleteAuthor = (req, res, next) => {
   const authorId = req.params.authorId;
-  Author.findByIdAndRemove(authorId).then(() => {
-    console.log("removed");
-    res.redirect("/authors");
-  });
+  Author.findById(authorId)
+    .then((author) => {
+      console.log("author to delete", author);
+      Book.remove({ author: { _id: authorId } })
+        .then((book) => {
+          console.log("book to delte on cascade", book);
+        })
+        .catch((err) => console.log(err));
+      return author.remove();
+    })
+
+    .then(() => {
+      res.redirect("/authors");
+    })
+    .catch((err) => console.log(err));
 };

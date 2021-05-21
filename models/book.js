@@ -1,5 +1,6 @@
 // import mongoose to interacte to the db
 const mongoose = require("mongoose");
+const Author = require("./author");
 const Schema = mongoose.Schema;
 
 const bookSchema = new Schema({

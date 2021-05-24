@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const Book = require("../models/book");
 const Author = require("../models/author");
 const book = require("../models/book");
+const e = require("express");
 
 exports.booksIndex = (req, res, next) => {
   Book.find()
@@ -35,7 +36,7 @@ exports.addBook = (req, res, next) => {
 
   Author.findOneAndUpdate(
     { name: { $regex: new RegExp("^" + author + "$", "i") } },
-    { name: author },
+    { name: author, $push: { books: bookId } },
     { new: true, upsert: true }
   ).then((author) => {
     //create book
@@ -113,10 +114,39 @@ exports.editBook = (req, res, next) => {
 exports.deleteBook = (req, res, next) => {
   const bookId = req.params.bookId;
 
-  Book.findByIdAndRemove(bookId)
-    .then(() => {
-      console.log("deleted successfully");
-      res.redirect("/books");
+  Book.findById(bookId)
+    .populate("author")
+    .then((book) => {
+      return Author.findOne({ name: book.author.name })
+        .then((author) => {
+          console.log("author on delete book", author);
+
+          //if author has no books delete author too
+
+          const newBooks = author.books.filter((book) => {
+            return book._id != bookId;
+          });
+
+          if (newBooks.length <= 0) {
+            console.log("filtered books", newBooks);
+            console.log("no books for this author");
+            //delete author with no books
+            author.remove();
+          } else {
+            author.books = newBooks;
+            console.log("author books after filter", author.books);
+            //save new author books
+            author.save();
+          }
+          return;
+        })
+        .then(() => {
+          book.remove();
+          console.log("deleted successfully");
+        })
+        .then(() => {
+          res.redirect("/books");
+        });
     })
     .catch((err) => console.log(err));
 };

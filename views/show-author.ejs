@@ -1,0 +1,20 @@
+<%- include('./include/head.ejs') %>
+<div class="container-fluid">
+  <%- include('./include/header.ejs') %>
+  <div class="row">
+    <div class="col-xs-12 col-md-6 mx-auto text-center">
+      <div class="card mt-3 mb-3">
+        <div class="card-header">
+          <h3><%= author.name %></h3>
+        </div>
+        <div class="card">
+          <h5>Books in the library:</h5>
+
+          <% let autBook = author.books; %> <% for (let book of autBook) { %>
+          <h6><a href="/book/<%= book._id%>"> <%= book.title%> </a></h6>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

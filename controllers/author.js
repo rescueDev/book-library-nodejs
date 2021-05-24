@@ -3,8 +3,8 @@ const Book = require("../models/book");
 
 exports.authorsIndex = (req, res, next) => {
   Author.find()
+    .populate("books")
     .then((authors) => {
-      console.log("autori", authors);
       res.render("authors", {
         authors: authors,
         titlePage: "author",
@@ -33,6 +33,20 @@ exports.addAuthor = (req, res, next) => {
     })
     .then(() => {
       res.redirect("/authors");
+    })
+    .catch((err) => console.log(err));
+};
+
+exports.showAuthor = (req, res, next) => {
+  const authorId = req.params.authorId;
+
+  Author.findOne({ _id: authorId })
+    .populate("books")
+    .then((author) => {
+      res.render("show-author", {
+        titlePage: "Author",
+        author: author,
+      });
     })
     .catch((err) => console.log(err));
 };

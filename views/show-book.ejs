@@ -1,0 +1,20 @@
+<%- include('./include/head.ejs') %>
+<div class="container-fluid">
+  <%- include('./include/header.ejs') %>
+  <div class="row">
+    <div class="col-12 text-center">
+      <div class="card mt-3 mb-3">
+        <div class="card-header">
+          <h3><%= book.title %></h3>
+        </div>
+        <span>Author:</span>
+        <h4><%= book.author.name %></h4>
+
+        <span>Page count:</span>
+        <h4><%= book.pageCount%></h4>
+        <span>Published:</span>
+        <h4><%= book.publishDate%></h4>
+      </div>
+    </div>
+  </div>
+</div>

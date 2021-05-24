@@ -17,14 +17,15 @@
           <h4><%= book.pageCount%></h4>
           <span>Published:</span>
           <h4><%= book.publishDate%></h4>
-          <div>
-            <a class="btn btn-danger" href="/edit-book/<%=book._id%>">Edit</a>
+          <div class="d-flex justify-content-center">
+            <a class="btn btn-success" href="/book/<%=book._id%>">Show</a>
+             <a class="btn btn-warning" href="/edit-book/<%=book._id%>">Edit</a>
+             <form action="/delete-book/<%= book._id%>" method="POST">
+               <button type="submit" class="btn btn-danger">
+                 Delete
+               </button>
+             </form>
           </div>
-          <form action="/delete-book/<%= book._id%>" method="POST">
-            <button type="submit" class="btn btn-warning">
-              Delete
-            </button>
-          </form>
         </div>
 
 

@@ -64,6 +64,20 @@ exports.addBook = (req, res, next) => {
   });
 };
 
+exports.showBook = (req, res, next) => {
+  const bookId = req.params.bookId;
+
+  Book.findOne({ _id: bookId })
+    .populate("author")
+    .then((book) => {
+      res.render("show-book", {
+        titlePage: "Book",
+        book: book,
+      });
+    })
+    .catch((err) => console.log(err));
+};
+
 exports.getEditBook = (req, res, next) => {
   const bookId = req.params.bookId;
   console.log("id di book da editare", bookId);

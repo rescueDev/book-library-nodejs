@@ -72,12 +72,11 @@ exports.deleteAuthor = (req, res, next) => {
       console.log("author to delete", author);
       Book.remove({ author: { _id: authorId } })
         .then((book) => {
-          console.log("book to delte on cascade", book);
+          console.log("book to delete on cascade", book);
         })
         .catch((err) => console.log(err));
       return author.remove();
     })
-
     .then(() => {
       res.redirect("/authors");
     })

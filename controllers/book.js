@@ -110,4 +110,13 @@ exports.editBook = (req, res, next) => {
     .catch((err) => console.log(err));
 };
 
-exports.deleteBook = (req, res, next) => {};
+exports.deleteBook = (req, res, next) => {
+  const bookId = req.params.bookId;
+
+  Book.findByIdAndRemove(bookId)
+    .then(() => {
+      console.log("deleted successfully");
+      res.redirect("/books");
+    })
+    .catch((err) => console.log(err));
+};

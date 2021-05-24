@@ -1,2 +1,2 @@
-# Simple CRUD with NoSQL DB (MongoDB) and Node.js
+# Simple CRUD with NoSQL DB (MongoDB), Mongoose and Node.js
 

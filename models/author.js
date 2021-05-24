@@ -6,7 +6,12 @@ const authorSchema = new Schema({
     type: String,
     required: true,
   },
-  book: { type: Schema.Types.ObjectId, ref: "Book" },
+  books: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Book",
+    },
+  ],
 });
 
 module.exports = mongoose.model("Author", authorSchema);

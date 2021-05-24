@@ -4,7 +4,7 @@
   <div class="row">
     <div class="col-12 text-center">
       <h1>Books Page</h1>
-      <ul>
+      <div>
         <% for (let book of books) { %>
         <div class="card mt-3 mb-3">
           <div class="card-header">
@@ -17,7 +17,11 @@
           <h4><%= book.pageCount%></h4>
           <span>Published:</span>
           <h4><%= book.publishDate%></h4>
+          <div>
+            <a class="btn btn-warning" href="/edit-book/<%=book._id%>">Edit</a>
+          </div>
         </div>
+
 
         <% }%>
       </ul>

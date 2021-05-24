@@ -13,7 +13,7 @@ const bookSchema = new Schema({
     required: false,
   },
   publishDate: {
-    type: Date,
+    type: String,
     required: false,
   },
   pageCount: {
@@ -21,7 +21,7 @@ const bookSchema = new Schema({
     required: true,
   },
   createdAt: {
-    type: Date,
+    type: String,
     required: true,
     default: Date.now,
   },

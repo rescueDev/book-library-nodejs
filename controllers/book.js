@@ -2,6 +2,7 @@ const { ObjectID } = require("bson");
 const mongoose = require("mongoose");
 const Book = require("../models/book");
 const Author = require("../models/author");
+const book = require("../models/book");
 
 exports.booksIndex = (req, res, next) => {
   Book.find()
@@ -63,9 +64,50 @@ exports.addBook = (req, res, next) => {
 };
 
 exports.getEditBook = (req, res, next) => {
-  res.render("book-edit");
+  const bookId = req.params.bookId;
+  console.log("id di book da editare", bookId);
+  //find book to edit
+  Book.findOne({ _id: bookId })
+    .populate("author")
+    .then((book) => {
+      res.render("book-edit", {
+        book: book,
+      });
+    });
 };
 
-exports.editBook = (req, res, next) => {};
+exports.editBook = (req, res, next) => {
+  const bookId = req.body.bookId;
+  const newTitle = req.body.title;
+  const newDescription = req.body.description;
+  const newPublishDate = req.body.publishDate;
+  const newPageCount = req.body.pageCount;
+  const newAuthor = req.body.author;
+  //find the book to update
+  Book.findOne({ _id: bookId })
+    .populate("author")
+    .then((book) => {
+      console.log("book to edit", book);
+      book.title = newTitle;
+      book.description = newDescription;
+      book.publishDate = newPublishDate;
+      book.pageCount = newPageCount;
+      book.author.name = newAuthor;
+
+      //update author linked to the book
+      Author.findOneAndUpdate(
+        { _id: book.author._id },
+        { name: book.author.name },
+        { upsert: true, new: true }
+      );
+
+      return book.save();
+    })
+    .then((book) => {
+      console.log("book edited and saved", book);
+      res.redirect("/books");
+    })
+    .catch((err) => console.log(err));
+};
 
 exports.deleteBook = (req, res, next) => {};

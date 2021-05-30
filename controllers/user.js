@@ -48,7 +48,26 @@ exports.postLogin = (req, res, next) => {
 
   User.findOne({ email: email })
     .then((user) => {
-      console.log(user);
+      if (!user) {
+        //login fails
+        return res.redirect("/login");
+      }
+
+      bcrypt.compare(password, user.password).then((doMatch) => {
+        //if passwords do match
+        if (doMatch) {
+          //create new session for this user
+          req.session.isLoggedIn = true;
+          req.session.user = user;
+
+          //save session
+          return req.session.save((err) => {
+            console.log(err);
+            res.redirect("/");
+          });
+        }
+        return res.redirect("/login");
+      });
     })
     .catch((err) => console.log(err));
 };

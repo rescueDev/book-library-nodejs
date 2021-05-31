@@ -45,6 +45,7 @@ app.use((req, res, next) => {
   }
   User.findById(req.session.user._id)
     .then((user) => {
+      //store user in every request through each middleware
       req.user = user;
       next();
     })

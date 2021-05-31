@@ -1,10 +1,12 @@
 const User = require("../models/user");
+const Book = require("../models/book");
 const bcrypt = require("bcryptjs");
 
 exports.getSignUp = (req, res, next) => {
   res.render("signup", {
     path: "/signup",
     titlePage: "signup",
+    isAuthenticated: req.session.isLoggedIn,
   });
 };
 
@@ -39,7 +41,7 @@ exports.getLogin = (req, res, next) => {
   res.render("login", {
     path: "/login",
     titlePage: "Login",
-    isAuthenticated: false,
+    isAuthenticated: req.session.isLoggedIn,
   });
 };
 
@@ -78,4 +80,34 @@ exports.postLogout = (req, res, next) => {
     console.log("errors:", err);
     res.redirect("/");
   });
+};
+
+exports.getCart = (req, res, next) => {
+  console.log("cart user", req.user.cart);
+  req.user
+    .populate("cart.items.bookId")
+    .execPopulate()
+    .then((user) => {
+      res.render("cart", {
+        path: "/cart",
+        titlePage: "Cart",
+        cart: user.cart,
+        isAuthenticated: req.session.isLoggedIn,
+      });
+    });
+};
+
+exports.addToCart = (req, res, next) => {
+  const bookId = req.params.bookId;
+  console.log("book id", bookId);
+  Book.findById(bookId)
+    .then((book) => {
+      console.log("book inside controller", book);
+      return req.user.addToCart(book);
+    })
+    .then((result) => {
+      console.log(result);
+      res.redirect("/cart");
+    })
+    .catch((err) => console.log(err));
 };

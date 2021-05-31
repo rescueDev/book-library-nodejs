@@ -1,0 +1,18 @@
+<%- include('./include/head.ejs') %> <%- include('./include/header.ejs') %>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12 text-center">
+      <ul>
+        <h3>My Cart</h3>
+        <% cart.items.forEach(el => { %>
+
+        <div>
+          <span> <h4><%= el.bookId.title %></h4></span>
+          <span>(<%= el.quantity %>)</span>
+        </div>
+        <% }) %>
+      </ul>
+    </div>
+  </div>
+</div>

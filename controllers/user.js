@@ -111,3 +111,25 @@ exports.addToCart = (req, res, next) => {
     })
     .catch((err) => console.log(err));
 };
+
+exports.removeFromCart = (req, res, next) => {
+  const bookId = req.params.bookId;
+  console.log("book id", bookId);
+  Book.findById(bookId)
+    .then((book) => {
+      console.log("book to remove from cart", book);
+      return req.user.removeFromCart(book);
+    })
+    .then((result) => {
+      console.log(result);
+      res.redirect("/cart");
+    })
+    .catch((err) => console.log(err));
+};
+
+exports.clearCart = (req, res, next) => {
+  return req.user.clearCart().then((result) => {
+    console.log("all cleared");
+    res.redirect("/cart");
+  });
+};

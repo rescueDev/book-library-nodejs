@@ -37,6 +37,7 @@ app.use(
 );
 //set the view engine to ejs
 app.set("view engine", "ejs");
+app.set("views", "views");
 
 //home page route
 app.use((req, res, next) => {

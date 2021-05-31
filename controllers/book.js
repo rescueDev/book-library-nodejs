@@ -20,7 +20,7 @@ exports.booksIndex = (req, res, next) => {
 };
 
 exports.addBookPage = (req, res, next) => {
-  res.render("book-create", {
+  res.render("admin/book-create", {
     isAuthenticated: req.session.isLoggedIn,
   });
 };
@@ -89,7 +89,7 @@ exports.getEditBook = (req, res, next) => {
   Book.findOne({ _id: bookId })
     .populate("author")
     .then((book) => {
-      res.render("book-edit", {
+      res.render("admin/book-edit", {
         book: book,
       });
     });

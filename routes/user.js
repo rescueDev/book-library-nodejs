@@ -8,7 +8,7 @@ const userController = require("../controllers/user");
 router.get("/signup", userController.getSignUp);
 router.post("/signup", userController.postSignUp);
 router.get("/login", userController.getLogin);
-router.post("/login", isAuth, userController.postLogin);
+router.post("/login", userController.postLogin);
 router.post("/logout", userController.postLogout);
 
 router.get("/cart", isAuth, userController.getCart);

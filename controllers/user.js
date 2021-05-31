@@ -3,8 +3,8 @@ const Book = require("../models/book");
 const bcrypt = require("bcryptjs");
 
 exports.getSignUp = (req, res, next) => {
-  res.render("signup", {
-    path: "/signup",
+  res.render("auth/signup", {
+    path: "auth/signup",
     titlePage: "signup",
     isAuthenticated: req.session.isLoggedIn,
   });
@@ -38,8 +38,8 @@ exports.postSignUp = (req, res, next) => {
 };
 
 exports.getLogin = (req, res, next) => {
-  res.render("login", {
-    path: "/login",
+  res.render("auth/login", {
+    path: "login",
     titlePage: "Login",
     isAuthenticated: req.session.isLoggedIn,
   });

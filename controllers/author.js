@@ -17,7 +17,7 @@ exports.authorsIndex = (req, res, next) => {
 };
 
 exports.getAddAuthor = (req, res, next) => {
-  res.render("author-create");
+  res.render("admin/author-create");
 };
 
 exports.addAuthor = (req, res, next) => {
@@ -57,7 +57,7 @@ exports.getEditAuthor = (req, res, next) => {
   const authorId = req.params.authorId;
   Author.findOne({ _id: authorId })
     .then((author) => {
-      res.render("author-edit", {
+      res.render("admin/author-edit", {
         author: author,
         isAuthenticated: req.session.isLoggedIn,
       });

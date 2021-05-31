@@ -13,13 +13,16 @@ exports.booksIndex = (req, res, next) => {
         linkPath: "/books",
         titlePage: "Books",
         books: books,
+        isAuthenticated: req.session.isLoggedIn,
       });
     })
     .catch((err) => console.log(err));
 };
 
 exports.addBookPage = (req, res, next) => {
-  res.render("book-create");
+  res.render("book-create", {
+    isAuthenticated: req.session.isLoggedIn,
+  });
 };
 
 exports.addBook = (req, res, next) => {
@@ -73,6 +76,7 @@ exports.showBook = (req, res, next) => {
       res.render("show-book", {
         titlePage: "Book",
         book: book,
+        isAuthenticated: req.session.isLoggedIn,
       });
     })
     .catch((err) => console.log(err));

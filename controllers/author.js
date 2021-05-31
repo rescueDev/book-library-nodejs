@@ -9,6 +9,7 @@ exports.authorsIndex = (req, res, next) => {
         authors: authors,
         titlePage: "author",
         linkPath: "/authors",
+        isAuthenticated: req.session.isLoggedIn,
       });
     })
 
@@ -46,6 +47,7 @@ exports.showAuthor = (req, res, next) => {
       res.render("show-author", {
         titlePage: "Author",
         author: author,
+        isAuthenticated: req.session.isLoggedIn,
       });
     })
     .catch((err) => console.log(err));
@@ -57,6 +59,7 @@ exports.getEditAuthor = (req, res, next) => {
     .then((author) => {
       res.render("author-edit", {
         author: author,
+        isAuthenticated: req.session.isLoggedIn,
       });
     })
     .catch((err) => console.log(err));

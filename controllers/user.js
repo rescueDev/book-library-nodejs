@@ -39,6 +39,7 @@ exports.getLogin = (req, res, next) => {
   res.render("login", {
     path: "/login",
     titlePage: "Login",
+    isAuthenticated: false,
   });
 };
 
@@ -70,4 +71,11 @@ exports.postLogin = (req, res, next) => {
       });
     })
     .catch((err) => console.log(err));
+};
+
+exports.postLogout = (req, res, next) => {
+  req.session.destroy((err) => {
+    console.log("errors:", err);
+    res.redirect("/");
+  });
 };

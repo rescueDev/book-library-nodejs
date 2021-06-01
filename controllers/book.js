@@ -31,6 +31,7 @@ exports.addBook = (req, res, next) => {
   const pageCount = req.body.pageCount;
   const createdAt = new Date();
   const author = req.body.author.toUpperCase();
+  const price = req.body.price;
 
   //check if author exist if not create one
 
@@ -48,6 +49,7 @@ exports.addBook = (req, res, next) => {
       pageCount: pageCount,
       createdAt: createdAt,
       author: author,
+      price: price,
     });
 
     //save book
@@ -99,6 +101,7 @@ exports.editBook = (req, res, next) => {
   const newPublishDate = req.body.publishDate;
   const newPageCount = req.body.pageCount;
   const newAuthor = req.body.author;
+  const newPrice = req.body.price;
   //find the book to update
   Book.findOne({ _id: bookId })
     .populate("author")
@@ -109,6 +112,7 @@ exports.editBook = (req, res, next) => {
       book.publishDate = newPublishDate;
       book.pageCount = newPageCount;
       book.author.name = newAuthor;
+      book.price = newPrice;
 
       //update author linked to the book
       Author.findOneAndUpdate(

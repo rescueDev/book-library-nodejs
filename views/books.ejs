@@ -17,6 +17,9 @@
           <h4><%= book.pageCount%></h4>
           <span>Published:</span>
           <h4><%= book.publishDate%></h4>
+          <span>Price:</span>
+          <h4><%= book.price%> $</h4>
+
           <!-- user actions -->
           <% if(isAuthenticated) { %>
           <div class="d-flex justify-content-center">

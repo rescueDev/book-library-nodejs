@@ -17,24 +17,33 @@
           <h4><%= book.pageCount%></h4>
           <span>Published:</span>
           <h4><%= book.publishDate%></h4>
+          <!-- user actions -->
+          <% if(isAuthenticated) { %>
           <div class="d-flex justify-content-center">
-            <a class="btn btn-success" href="/book/<%=book._id%>">Show</a>
-             <a class="btn btn-warning" href="/edit-book/<%=book._id%>">Edit</a>
-             <form action="/delete-book/<%= book._id%>" method="POST">
-               <button type="submit" class="btn btn-danger">
-                 Delete
-               </button>
-             </form>
+            <a class="btn btn-success" href="/book/<%=book._id%>">Show</a>      
              <form action="/add-to-cart/<%= book._id%>" method="POST">
               <input type="hidden" name="bookId" value="<% book._id %>">
+               <!-- csrf token -->
+               <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
                <button type="submit" class="btn btn-outline-primary">
                 Add To Cart
                </button>
              </form>
           </div>
+          <% } %>
+
+          <!-- admin actions -->
+          <% if(isAdmin) { %>
+          <div class="d-flex justify-content-center">
+            <a class="btn btn-warning" href="/edit-book/<%=book._id%>">Edit</a>
+             <form action="/delete-book/<%= book._id%>" method="POST">
+               <button type="submit" class="btn btn-danger">
+                 Delete
+               </button>
+             </form>
+          </div>
+          <% } %>
         </div>
-
-
         <% }%>
       </ul>
     </div>

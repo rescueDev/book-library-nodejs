@@ -13,16 +13,13 @@ exports.booksIndex = (req, res, next) => {
         linkPath: "/books",
         titlePage: "Books",
         books: books,
-        isAuthenticated: req.session.isLoggedIn,
       });
     })
     .catch((err) => console.log(err));
 };
 
 exports.addBookPage = (req, res, next) => {
-  res.render("admin/book-create", {
-    isAuthenticated: req.session.isLoggedIn,
-  });
+  res.render("admin/book-create", {});
 };
 
 exports.addBook = (req, res, next) => {
@@ -76,7 +73,6 @@ exports.showBook = (req, res, next) => {
       res.render("show-book", {
         titlePage: "Book",
         book: book,
-        isAuthenticated: req.session.isLoggedIn,
       });
     })
     .catch((err) => console.log(err));
@@ -85,6 +81,7 @@ exports.showBook = (req, res, next) => {
 exports.getEditBook = (req, res, next) => {
   const bookId = req.params.bookId;
   console.log("id di book da editare", bookId);
+  console.log("req admin", req.admin);
   //find book to edit
   Book.findOne({ _id: bookId })
     .populate("author")

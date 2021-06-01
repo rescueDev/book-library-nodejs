@@ -9,7 +9,6 @@ exports.authorsIndex = (req, res, next) => {
         authors: authors,
         titlePage: "author",
         linkPath: "/authors",
-        isAuthenticated: req.session.isLoggedIn,
       });
     })
 
@@ -17,7 +16,9 @@ exports.authorsIndex = (req, res, next) => {
 };
 
 exports.getAddAuthor = (req, res, next) => {
-  res.render("admin/author-create");
+  res.render("admin/author-create", {
+    csrfToken: req.csrfToken(),
+  });
 };
 
 exports.addAuthor = (req, res, next) => {
@@ -47,7 +48,6 @@ exports.showAuthor = (req, res, next) => {
       res.render("show-author", {
         titlePage: "Author",
         author: author,
-        isAuthenticated: req.session.isLoggedIn,
       });
     })
     .catch((err) => console.log(err));
@@ -59,7 +59,6 @@ exports.getEditAuthor = (req, res, next) => {
     .then((author) => {
       res.render("admin/author-edit", {
         author: author,
-        isAuthenticated: req.session.isLoggedIn,
       });
     })
     .catch((err) => console.log(err));

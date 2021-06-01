@@ -17,17 +17,25 @@
             <h6><a href="/book/<%= book._id%>"> <%= book.title%> </a></h6>
             <% } %>
           </div>
+          <!-- user actions -->
           <div class="d-flex justify-content-center">
             <a class="btn btn-secondary" href="/author/<%= author._id%>"
               >Show</a
             >
+          </div>
+          <!-- admin actions -->
+          <% if(isAdmin) {%>
+          <div class="d-flex justify-content-center">
             <a class="btn btn-secondary" href="/edit-author/<%= author._id%>"
               >Edit</a
             >
             <form method="POST" action="/delete-author/<%= author._id%>">
+              <!-- csrf token -->
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
               <button class="btn btn-danger" type="submit">Delete</button>
             </form>
           </div>
+          <% }%>
         </div>
         <% }%>
       </ul>

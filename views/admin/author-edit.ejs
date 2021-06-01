@@ -5,6 +5,8 @@
   <div class="row">
     <div class="col-sm-12">
       <form method="POST" action="/edit-author">
+        <!-- csrf token -->
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
         <div class="form-group">
           <label for="name">Name</label>
           <input

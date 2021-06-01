@@ -30,6 +30,10 @@ const bookSchema = new Schema({
     required: true,
     ref: "Author",
   },
+  price: {
+    type: Number,
+    required: true,
+  },
 });
 
 module.exports = mongoose.model("Book", bookSchema);

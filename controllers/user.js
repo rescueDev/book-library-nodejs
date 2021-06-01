@@ -6,7 +6,6 @@ exports.getSignUp = (req, res, next) => {
   res.render("auth/signup", {
     path: "auth/signup",
     titlePage: "signup",
-    isAuthenticated: req.session.isLoggedIn,
   });
 };
 
@@ -41,7 +40,6 @@ exports.getLogin = (req, res, next) => {
   res.render("auth/login", {
     path: "login",
     titlePage: "Login",
-    isAuthenticated: req.session.isLoggedIn,
   });
 };
 
@@ -65,7 +63,7 @@ exports.postLogin = (req, res, next) => {
 
           //save session
           return req.session.save((err) => {
-            console.log(err);
+            console.log("errors post login?", err);
             res.redirect("/");
           });
         }
@@ -76,7 +74,10 @@ exports.postLogin = (req, res, next) => {
 };
 
 exports.postLogout = (req, res, next) => {
+  console.log("session before beeen destroyed", req.session);
+
   req.session.destroy((err) => {
+    console.log("session destroyed", req.session);
     console.log("errors:", err);
     res.redirect("/");
   });
@@ -92,7 +93,6 @@ exports.getCart = (req, res, next) => {
         path: "/cart",
         titlePage: "Cart",
         cart: user.cart,
-        isAuthenticated: req.session.isLoggedIn,
       });
     });
 };

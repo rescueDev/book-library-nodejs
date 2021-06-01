@@ -17,7 +17,9 @@
           />
         </div>
 
-        <button type="submit">Login</button>
+        <!-- csrf token -->
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+        <button class="btn btn-primary" type="submit">Login</button>
       </form>
     </div>
   </div>

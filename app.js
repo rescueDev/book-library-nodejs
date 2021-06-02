@@ -36,8 +36,7 @@ const store = new MongoDBStore({
 const transporter = nodemailer.createTransport(
   sendGridTransport({
     auth: {
-      api_key:
-        "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",
+      api_key: process.env.SENDGRID_KEY,
     },
   })
 );

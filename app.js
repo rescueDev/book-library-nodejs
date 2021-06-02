@@ -8,6 +8,9 @@ const csrf = require("csurf");
 const bcrypt = require("bcryptjs");
 const flash = require("connect-flash");
 
+//import nodemailer and sendGrid for email
+const nodemailer = require("nodemailer");
+const sendGridTransport = require("nodemailer-sendgrid-transport");
 require("dotenv").config();
 
 //import routes
@@ -28,6 +31,16 @@ const store = new MongoDBStore({
   uri: MONGODB_URI,
   collection: "sessions",
 });
+
+//create transporter for sending emails
+const transporter = nodemailer.createTransport(
+  sendGridTransport({
+    auth: {
+      api_key:
+        "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",
+    },
+  })
+);
 
 //body parser for incoming data req
 app.use(bodyParser.urlencoded({ extended: false }));

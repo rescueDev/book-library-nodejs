@@ -28,6 +28,8 @@ const UserSchema = new Schema({
     type: Boolean,
     default: false,
   },
+  resetToken: String,
+  resetTokenExpiration: Date,
 });
 
 UserSchema.methods.addToCart = function (book) {

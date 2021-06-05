@@ -105,9 +105,9 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get("/", (req, res, next) => {
-  res.render("home");
-});
+// app.get("/", (req, res, next) => {
+//   res.render("home");
+// });
 app.use(booksRoutes);
 app.use(authorsRoutes);
 app.use(userRoutes);

@@ -5,6 +5,22 @@ const Author = require("../models/author");
 const book = require("../models/book");
 const e = require("express");
 
+exports.booksHome = (req, res, next) => {
+  //last five added books
+  Book.find()
+    .sort({ createdAt: -1 })
+    .limit(5)
+    .populate("author")
+    .then((books) => {
+      res.render("home", {
+        books: books,
+        path: "/",
+        titlePage: "Home",
+      });
+    })
+    .catch((err) => console.log(err));
+};
+
 exports.booksIndex = (req, res, next) => {
   Book.find()
     .populate("author")

@@ -5,6 +5,8 @@ const isAdmin = require("../middleware/isAdmin");
 //import controllers
 const booksController = require("../controllers/book");
 
+router.get("/", booksController.booksHome);
+
 router.get("/books", booksController.booksIndex);
 router.get("/add-book", isAdmin, booksController.addBookPage);
 router.post("/add-book", isAdmin, booksController.addBook);

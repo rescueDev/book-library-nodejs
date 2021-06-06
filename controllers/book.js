@@ -1,9 +1,6 @@
 const { ObjectID } = require("bson");
-const mongoose = require("mongoose");
 const Book = require("../models/book");
 const Author = require("../models/author");
-const book = require("../models/book");
-const e = require("express");
 
 exports.booksHome = (req, res, next) => {
   //last five added books
@@ -48,6 +45,8 @@ exports.addBook = (req, res, next) => {
   const createdAt = new Date();
   const author = req.body.author.toUpperCase();
   const price = req.body.price;
+  const image = req.file;
+  const imageUrl = image.path;
 
   //check if author exist if not create one
 
@@ -66,6 +65,7 @@ exports.addBook = (req, res, next) => {
       createdAt: createdAt,
       author: author,
       price: price,
+      cover: imageUrl,
     });
 
     //save book

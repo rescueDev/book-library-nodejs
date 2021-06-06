@@ -34,6 +34,9 @@ const bookSchema = new Schema({
     type: Number,
     required: true,
   },
+  cover: {
+    type: String,
+  },
 });
 
 module.exports = mongoose.model("Book", bookSchema);

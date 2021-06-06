@@ -98,8 +98,7 @@ exports.showBook = (req, res, next) => {
 
 exports.getEditBook = (req, res, next) => {
   const bookId = req.params.bookId;
-  console.log("id di book da editare", bookId);
-  console.log("req admin", req.admin);
+
   //find book to edit
   Book.findOne({ _id: bookId })
     .populate("author")
@@ -118,17 +117,33 @@ exports.editBook = (req, res, next) => {
   const newPageCount = req.body.pageCount;
   const newAuthor = req.body.author;
   const newPrice = req.body.price;
+  const newCover = req.file;
+  const coverUrl = newCover.path;
+
+  console.log("file uploaded", req.file);
   //find the book to update
   Book.findOne({ _id: bookId })
     .populate("author")
     .then((book) => {
       console.log("book to edit", book);
-      book.title = newTitle;
-      book.description = newDescription;
-      book.publishDate = newPublishDate;
-      book.pageCount = newPageCount;
-      book.author.name = newAuthor;
-      book.price = newPrice;
+
+      if (!newCover) {
+        console.log("no cover");
+        book.title = newTitle;
+        book.description = newDescription;
+        book.publishDate = newPublishDate;
+        book.pageCount = newPageCount;
+        book.author.name = newAuthor;
+        book.price = newPrice;
+      } else {
+        book.title = newTitle;
+        book.description = newDescription;
+        book.publishDate = newPublishDate;
+        book.pageCount = newPageCount;
+        book.author.name = newAuthor;
+        book.price = newPrice;
+        book.cover = coverUrl;
+      }
 
       //update author linked to the book
       Author.findOneAndUpdate(

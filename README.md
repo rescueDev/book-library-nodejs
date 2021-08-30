@@ -1,6 +1,6 @@
 # BookShop WebSite
 
-Simple replica of bookshop website.
+Simple bookshop website.
 
 ## Table of contents
 

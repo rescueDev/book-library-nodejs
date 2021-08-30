@@ -18,7 +18,7 @@ const userRoutes = require("./routes/user");
 const User = require("./models/user");
 const { ObjectId } = require("bson");
 
-const MONGODB_URI = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.5vg5z.mongodb.net/bookLibrary?retryWrites=true&w=majority`;
+const MONGODB_URI = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.phggk.mongodb.net/bookLibrary?retryWrites=true&w=majority`;
 
 //create app instance
 const app = express();
